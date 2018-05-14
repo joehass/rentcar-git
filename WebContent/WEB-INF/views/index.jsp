@@ -65,7 +65,7 @@ Map<String,Object> systemSet = (Map<String,Object>)application.getAttribute("Sys
 <script src='<%=request.getContextPath() %>/fore/js/jquery-1.7.2.min.js'></script>
 <script type="text/javascript">
 $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
-	 $("#myLogoImg").attr("src","/car_img/"+data);
+	 $("#myLogoImg").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 });
 </script>
     
@@ -80,6 +80,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/getOrders?u_card=${user.u_card}">我的订单</a></li>
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/user/talk">联系客服</a></li>
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/car/getImg?u_card=${user.u_card}">车图一览</a></li>
+                    	<li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/baoxiu2?u_card=${user.u_card}">车辆报修</a></li>
                     </ul>
                 </div>  
             </div>
@@ -92,9 +93,9 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
 				<ul class="" id="bxslider-home4">
 					<c:forEach var="c" items="${requestScope.newCars}" >
 				        <li>
-							<img style="height:300px;width: 450px;" src="/car_img/${c.carImage.img1}" alt="Slide">
-							<img style="height:60px;width: 80px;position:absolute;left:530px;top: 50px;" src="/car_img/${c.type.t_img}" alt="Slide">
-							<img style="height:100px;width: 80px;position:absolute;left:530px;top: 140px;" src="/car_img/${c.biaozhi.b_img}" alt="Slide">
+							<img style="height:300px;width: 450px;" src="<%=request.getContextPath() %>/car_img/${c.carImage.img1}" alt="Slide">
+							<img style="height:60px;width: 80px;position:absolute;left:530px;top: 50px;" src="<%=request.getContextPath() %>/car_img/${c.type.t_img}" alt="Slide">
+							<img style="height:100px;width: 80px;position:absolute;left:530px;top: 140px;" src="<%=request.getContextPath() %>/car_img/${c.biaozhi.b_img}" alt="Slide">
 							<div class="caption-group">
 								<h2 class="caption title">
 									<span class="primary"><strong>${c.b_code}</strong></span>
@@ -125,15 +126,15 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                        
                         	<div style="height:350px;border-radius:15px;" class="single-product">
                                 <div class="product-f-image" style="border-radius:15px;">
-                                    <img style="height:255px;width: 220px;border:1px solid #ccc;border-radius:15px;" src="/car_img/${c.carImage.img1}" alt="图片不见了">
+                                    <img style="height:255px;width: 220px;border:1px solid #ccc;border-radius:15px;" src="<%=request.getContextPath() %>/car_img/${c.carImage.img1}" alt="图片不见了">
                                     <div  class="product-hover">
                                         <a style="width: 170px;" href="#" onclick="yuyue('${c.b_code}')" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i>预约汽车</a>
                                         <a style="width: 170px;" href="${pageContext.request.contextPath }/car/getCarInfo/${c.b_code}" class="view-details-link"><i class="fa fa-link"></i>查看详情</a>
                                     </div>
                                 </div>
                                 <div style="margin-top: 6px;border:1px solid #CCCCCC;padding-top: 8px;padding-left:5px;" class="product-carousel-price">
-	                               <img style="height:60px;width: 75px;position: relative;float: left;" src="/car_img/${c.type.t_img}">
-								   <img style="height:60px;width: 50px;position: relative;float: left;;" src="/car_img/${c.biaozhi.b_img}">
+	                               <img style="height:60px;width: 75px;position: relative;float: left;" src="<%=request.getContextPath() %>/car_img/${c.type.t_img}">
+								   <img style="height:60px;width: 50px;position: relative;float: left;;" src="<%=request.getContextPath() %>/car_img/${c.biaozhi.b_img}">
 	                               <i style="color:blue;font-size: 1.2em;">${c.b_code}</i>
 	                               <i style="color:blue;font-size: 1.2em;font-family:楷体;font-weight: 800;">${c.b_kuanshi}</i>
 	                               <i style="color:red;font-size: 1.2em;">￥:${c.b_price}</i>

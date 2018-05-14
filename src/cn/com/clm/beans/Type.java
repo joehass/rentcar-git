@@ -1,5 +1,8 @@
 package cn.com.clm.beans;
 
+
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -45,6 +48,7 @@ public class Type {
 	public void setT_img(String t_img) {
 		this.t_img = t_img;
 	}
+
 
 	public String getT_date() {
 		return t_date;

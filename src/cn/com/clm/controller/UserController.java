@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.com.clm.beans.Manager;
 import cn.com.clm.beans.Message;
 import cn.com.clm.beans.User;
 import cn.com.clm.beans.UserPb;
 import cn.com.clm.services.CarService;
+import cn.com.clm.services.ManagerService;
 import cn.com.clm.services.UserService;
 import cn.com.clm.utils.HttpUtils;
 import cn.com.clm.utils.dateUtil;
@@ -39,9 +41,11 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private CarService carService;
+	@Autowired
+	private ManagerService managerService;
 	
 	@RequestMapping(value="/addUser",method=RequestMethod.GET)
-	private String addUser(HttpServletRequest request) throws IOException, ServletException{
+	private String addUser(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException{
 		String userStr = request.getParameter("user");
 		String []u = userStr.split("!");
 		for(String s:u){
@@ -53,7 +57,7 @@ public class UserController {
 		
 		String img = u[8];
 		if("*".equals(img)){
-			img="C://Users//曹黎明//Pictures//tx//a14.jpg";
+			img="C://Users//胡烨//Pictures//tx//a14.jpg";
 		}
 		/*File file =  new File(img);
 		InputStream input =  file.getInputStream();
@@ -68,15 +72,17 @@ public class UserController {
 		
 		String u_state = "未审核";
 		
-		User user = new User(u[0], u[6], u[1], age, u[3], u[5], u[7], "201704202209521615.jpg", u[4], u_date ,u_state);
+		User user = new User(u[0], u[6], u[1], age, u[3], u[5], u[7], "201704202209521615.jpg", u[4], u_date);
 		UserPb userPb = new UserPb(u[3], 0, 0);
 		int result = userService.registerUser(user);
 		int result1 = userService.registerUserPb(userPb);
+		request.setAttribute("user", user);
 		if(result>0&&result1>0){
 			request.setAttribute("result", "1");
 		}else{
 			request.setAttribute("result", "0");
 		}
+		request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request,response);
 		return "register";
 		
 	}
@@ -101,7 +107,40 @@ public class UserController {
         return modelAndView;
     }
 	
-	 
+	@RequestMapping(value="/managerLogin",method=RequestMethod.POST)
+    public ModelAndView adminLogin(Manager manager,HttpServletRequest request,ModelMap model) throws Exception {
+		System.out.println("login->manager:"+manager);
+        Manager user1=managerService.checkLogin(manager.getM_name(), manager.getM_psw());
+        String viewName="fail";
+        ModelAndView modelAndView;
+        if(user1!=null){
+			viewName="managerIndex";
+			String u_card = user1.getM_card();
+			String page=request.getParameter("page");
+	        if(page == null){
+				page="1";
+			}
+	        modelAndView = new ModelAndView(viewName); 
+	        
+	        //查询汽车的类型和品牌遍历在option上
+	        modelAndView.addObject("types", carService.queryType());
+	        modelAndView.addObject("marks", carService.queryMark());
+	        
+			modelAndView.addObject("pageDate", carService.pageAll(Integer.parseInt(page)));
+			modelAndView.addObject("user", managerService.getManagerCore(u_card));
+	        
+			//modelAndView.addObject("user", userService.getUserCore(u_card));
+//			modelAndView = new ModelAndView(viewName); 
+//			modelAndView.addObject("newCars", carService.getNewCar());
+//			modelAndView.addObject("lowCars", carService.getLowCar());
+//			modelAndView.addObject("user", user1);
+//			model.addAttribute("user", user1);
+			return modelAndView;
+        }
+        modelAndView = new ModelAndView(viewName); 
+        return modelAndView;
+    }
+	
 	 @RequestMapping(value="/getUser/{u_card}")
 	public String getUserInfo(@PathVariable("u_card") String u_card,Map<String,Object> map){
 		map.put("user", userService.getUserCore(u_card));

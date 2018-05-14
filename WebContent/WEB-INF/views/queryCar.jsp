@@ -96,7 +96,7 @@
 <script src='<%=request.getContextPath() %>/fore/js/jquery-1.7.2.min.js'></script>
 <script type="text/javascript">
 $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
-	 $("#myLogoImg").attr("src","/car_img/"+data);
+	 $("#myLogoImg").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 });
 </script>
     
@@ -111,6 +111,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/getOrders?u_card=${user.u_card}">我的订单</a></li>
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/user/talk">联系客服</a></li>
                     	<li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/car/getImg?u_card=${user.u_card}">车图一览</a></li>
+                    	<li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/baoxiu2?u_card=${user.u_card}">车辆报修</a></li>
                     </ul>
                 </div>  
             </div>
@@ -257,7 +258,7 @@ function XsFun(){
 		return;
 	}
 	$.post("${pageContext.request.contextPath}/car/getMarkImg?b_id="+b_id,function(data){
-		 $("#xspp").attr("src","/car_img/"+data);
+		 $("#xspp").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 	});
 }
 function TyFun(){
@@ -266,7 +267,7 @@ function TyFun(){
 		return;
 	}
 	$.post("${pageContext.request.contextPath}/car/getTypeImg?t_id="+t_id,function(data){
-		 $("#xslx").attr("src","/car_img/"+data);
+		 $("#xslx").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 	});
 }
 </script> 
@@ -323,9 +324,9 @@ function queryCarInfo(b_code) {
 					 	<c:forEach var="car" items="${pageDate.date}">				
 							<div onclick="queryCarInfo('${car.b_code}')" style="margin:10px; width: 312px;height: 280px;border:1px solid #CCCCCC;float:left;">
 								<div>
-									<img style="padding:1px; margin:5px; width: 301px;height: 190px;border:1px solid #CCCCCC;" alt="" src="/car_img/${car.carImage.img1 }">
-									<img style="padding:1px; margin:5px; width: 80px;height: 70px;border:1px solid #CCCCCC;" alt="" src="/car_img/${car.type.t_img }">
-									<img style="padding:1px; margin:5px; width: 75px;height: 70px;border:1px solid #CCCCCC;" alt="" src="/car_img/${car.biaozhi.b_img }">
+									<img style="padding:1px; margin:5px; width: 301px;height: 190px;border:1px solid #CCCCCC;" alt="" src="<%=request.getContextPath() %>/car_img/${car.carImage.img1 }">
+									<img style="padding:1px; margin:5px; width: 80px;height: 70px;border:1px solid #CCCCCC;" alt="" src="<%=request.getContextPath() %>/car_img/${car.type.t_img }">
+									<img style="padding:1px; margin:5px; width: 75px;height: 70px;border:1px solid #CCCCCC;" alt="" src="<%=request.getContextPath() %>/car_img/${car.biaozhi.b_img }">
 									<label style="color:red;font-size: 1.4em;font-weight: 900;">￥：<i>${car.b_price }</i></label>
 								</div>
 							</div>
@@ -397,7 +398,7 @@ $(function(){
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>兰州交通大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
+                        <p>南昌航空大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
                     </div>
                 </div>
                 

@@ -25,6 +25,20 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderMapper orderMapper;
 
+	
+	
+	@Override
+	public void setOrderRid(int rp_id, String o_code) {
+		// TODO Auto-generated method stub
+		orderMapper.setOrderRid(rp_id,o_code);
+	}
+
+	@Override
+	public List<Order> getAllOrder() {
+		// TODO Auto-generated method stub
+		return orderMapper.getAllOrder();
+	}
+
 	@Override
 	public void makeOrder(String orderList, String u_card) {
 		String u_jscard = userService.getUserCore(u_card).getU_jscard();
@@ -33,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 		double b_price = carService.getOneCar(b_code).getB_price();
 		String startDate = order[1];
 		String endDate = order[2];
-		int days = (int)dateUtil.getDaySub(startDate, endDate);
+		int days = Integer.parseInt(order[6]);
 		double allMoney = MoneyUtil.getAllMoney(days, b_price)+800;
 		String tcdd = order[3];
 		System.out.println("tcdd:"+tcdd);
@@ -58,6 +72,12 @@ public class OrderServiceImpl implements OrderService {
 		return orderMapper.getOrders(u_card);
 	}
 	
+
+	@Override
+	public List<Order> getOrdersPay(String u_card) {
+		// TODO Auto-generated method stub
+		return orderMapper.getOrdersPay(u_card);
+	}
 
 	@Override
 	public int getNoPayOrder(String u_card) {
@@ -93,6 +113,17 @@ public class OrderServiceImpl implements OrderService {
 		String b_code = orderMapper.getB_code(o_code);
 		/*依据b_code 修改汽车的状态为-》可租用*/
 		carService.setCarState("Y", b_code);
+	}
+	
+	/*依据o_code 取消订单（已取消）,并设置汽车状态（X：修理中）*/
+	@Override
+	public void setOrderState1(String o_state, String o_code) {
+		orderMapper.setOrderState(o_state, o_code);
+		
+		/*依据o_code查询car 的b_code*/
+		String b_code = orderMapper.getB_code(o_code);
+		/*依据b_code 修改汽车的状态为-》可租用*/
+		carService.setCarState("X", b_code);
 	}
 
 	@Override

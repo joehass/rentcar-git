@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.clm.daos.ManagerMapper">
+
+    <!-- 登录：此处select标签的id值对应Mapper类中方法名 -->
+    <select id="getManagerByName" parameterType="String" resultMap="managerMap">
+            <!-- 此处写sql语句,#{Mapper类传入的参数} -->
+            SELECT * FROM manager WHERE m_name= #{m_name}
+    </select>
+    
+    <select id="getManagerCore" parameterType="String" resultMap="managerMap">
+        SELECT m.m_id,m.m_name,m.m_psw,m.m_sex,m.m_age,m.m_card,m.m_address,m.m_phone,m.m_img,m.m_date FROM manager m WHERE m.m_card=#{m_card}
+    </select>
+    <resultMap type="Manager" id="managerMap">
+    	<id property="id" column="m_id" />
+        <result property="m_name" column="m_name" />
+        <result property="m_psw" column="m_psw" />  	
+        <result property="m_sex" column="m_sex" />  	
+        <result property="m_age" column="m_age" />  	
+        <result property="m_card" column="m_card" />  	
+        <result property="m_address" column="m_address" />  	
+        <result property="m_phone" column="m_phone" />  	
+        <result property="m_img" column="m_img" />  	
+        <result property="m_date" column="m_date" /> 
+    </resultMap>
+</mapper>

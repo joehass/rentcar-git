@@ -6,7 +6,7 @@
   </welcome-file-list>
   <context-param>
     <param-name>filePath</param-name>
-    <param-value>G:\apache-tomcat-8.0.45\webapps\car_img</param-value>
+    <param-value>G:\apache-tomcat-8.5.11\webapps\car_img</param-value>
   </context-param>
   <servlet>
     <servlet-name>springDispatcherServlet</servlet-name>
@@ -65,7 +65,7 @@
     <servlet-class>cn.com.clm.utils.registerServlet</servlet-class>
     <init-param>
       <param-name>image</param-name>
-      <param-value>G:\apache-tomcat-8.0.45\webapps\car_img</param-value>
+      <param-value>G:\apache-tomcat-8.5.11\webapps\car_img</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>

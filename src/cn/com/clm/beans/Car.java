@@ -1,5 +1,7 @@
 package cn.com.clm.beans;
 
+import java.sql.Timestamp;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,9 +22,32 @@ public class Car {
 	private String b_introduce;//简介
 	private double b_price;//日租价
 	private String state;//当前状态     （Y：可租用，N：已租出，Z：已预约，L：已下架，X：修理中）
+	private int cost;//汽车成本价
+	
 	private Type type;
-	private Biaozhi biaozhi;
+	private Biaozhi biaozhi; 
 	private CarImage carImage;
+	private Order order;
+	private CarState carState;
+	
+	public CarState getCarState() {
+		return carState;
+	}
+	public void setCarState(CarState carState) {
+		this.carState = carState;
+	}
+	public int getCost() {
+		return cost;
+	}
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 	public Integer getC_id() {
 		return c_id;
 	}
@@ -53,6 +78,7 @@ public class Car {
 	public void setB_kuanshi(String b_kuanshi) {
 		this.b_kuanshi = b_kuanshi;
 	}
+	
 	public String getB_buydate() {
 		return b_buydate;
 	}

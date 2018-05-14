@@ -1,0 +1,64 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="carRental_fore:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/carRental_fore_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="carRental_fore" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="c3p0-0.9.5.1.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="commons-collections4-4.1.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="commons-logging-1.2.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="commons-logging.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="core-3.1.0.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="core.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="gson-2.1.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="jackson-annotations-2.6.0.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="jackson-core-2.6.0.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="jackson-databind-2.6.0.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="jstl.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="jxl.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="log4j-1.2.16.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="log4j-1.2.17.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="log4j-api-2.2.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="log4j-core-2.2.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="mchange-commons-java-0.2.10.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="mybatis-3.1.1.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="mybatis-spring-1.2.4.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="mysql-connector-java-5.0.8-bin.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="mysql-connector-java-5.1.39-bin.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="poi-3.16.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="poi-examples-3.16.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="poi-excelant-3.16.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="poi-ooxml-3.16.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="poi-ooxml-schemas-3.16.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="poi-scratchpad-3.16.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="proxool-0.9.1.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="proxool-cglib.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="Qrcode_swetake.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="slf4j-api-1.7.12.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="slf4j-log4j12-1.7.12.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-aop-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-beans-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-context-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-context-support-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-core-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-expression-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-jdbc-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-test-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-tx-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-web-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-webmvc-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="spring-webmvc-portlet-4.3.0.RELEASE.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="standard.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="taglibs-standard-jstlel-1.2.5.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="validation-api-1.0.0.GA.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="validation-api-1.1.0.CR1.jar" module-name="carRental_fore" />
+          <element id="library" level="module" name="xmlbeans-2.6.0.jar" module-name="carRental_fore" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="carRental_fore/web/Web" />
+    </root>
+  </artifact>
+</component>

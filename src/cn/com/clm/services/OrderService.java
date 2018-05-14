@@ -9,9 +9,18 @@ import cn.com.clm.beans.OrderInfo;
 
 @Repository
 public interface OrderService {
+	
+	public List<Order> getOrdersPay(String u_card);
+	
+	public void setOrderState1(String o_state, String o_code);
+	
 	public void makeOrder(String orderList,String u_card);
 	
+	public void setOrderRid(int rp_id,String o_code);
+	
 	public List<Order> getOrders(String u_card);
+	
+	public List<Order> getAllOrder();
 	
 	/*未支付的订单数量*/
 	public int getNoPayOrder(String u_card);

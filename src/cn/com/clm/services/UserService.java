@@ -12,8 +12,14 @@ import cn.com.clm.beans.UserRecode;
 @Repository
 public interface UserService {
 	
+	public UserPb getUserPb(String u_card);
+	
+	public void updateUserMoneyPay(int addMon, String u_card);
+	
 	// 通过用户名及密码核查用户登录
     public User checkLogin(String username, String password);
+    
+    public User getUserOrderCore(String u_card);
     
     public User getUserCore(String u_card);
     

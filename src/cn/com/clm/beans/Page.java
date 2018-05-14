@@ -1,6 +1,7 @@
 package cn.com.clm.beans;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 @Component
@@ -10,10 +11,51 @@ public class Page {
 	private List<Car> date;
 	private int page;//当前页
 	private int totalPage;//总页数
+	private List<Map> list;
+	private List<Type> type;
+	private List<Biaozhi>biaozhi;
 	
+	public List<Car> getDate() {
+		return date;
+	}
+
+
+
+	public void setDate(List<Car> date) {
+		this.date = date;
+	}
+
+
+
+	public List<Type> getType() {
+		return type;
+	}
+
+
+
+	public void setType(List<Type> type) {
+		this.type = type;
+	}
+
+
+
+	public List<Biaozhi> getBiaozhi() {
+		return biaozhi;
+	}
+
+
+
+	public void setBiaozhi(List<Biaozhi> biaozhi) {
+		this.biaozhi = biaozhi;
+	}
+
+
+
 	public Page() {
 	}
 	
+	
+
 	public Page(String sql, int size, int page) {
 		super();
 		this.sql = sql;
@@ -21,13 +63,22 @@ public class Page {
 		this.page = page;
 	}
 
-	public Page(String sql, int size, List<Car> date, int page, int totalPage) {
+	public Page(String sql, int size, /*List<Car> date,*/ int page, int totalPage) {
 		super();
 		this.sql = sql;
 		this.size = size;
-		this.date = date;
+		//this.date = date;
 		this.page = page;
 		this.totalPage = totalPage;
+	}
+
+	
+	public List<Map> getList() {
+		return list;
+	}
+
+	public void setList(List<Map> list) {
+		this.list = list;
 	}
 
 	public String getSql() {
@@ -46,13 +97,13 @@ public class Page {
 		this.size = size;
 	}
 
-	public List<Car> getDate() {
-		return date;
-	}
-
-	public void setDate(List<Car> date) {
-		this.date = date;
-	}
+//	public List<Car> getDate() {
+//		return date;
+//	}
+//
+//	public void setDate(List<Car> date) {
+//		this.date = date;
+//	}
 
 	public int getPage() {
 		return page;
@@ -72,7 +123,7 @@ public class Page {
 
 	@Override
 	public String toString() {
-		return "Page [sql=" + sql + ", size=" + size + ", date=" + date + ", page=" + page + ", totalPage=" + totalPage
+		return "Page [sql=" + sql + ", size=" + size  + ", page=" + page + ", totalPage=" + totalPage
 				+ "]";
 	}
 	

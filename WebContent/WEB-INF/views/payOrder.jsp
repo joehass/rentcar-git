@@ -100,7 +100,7 @@
 <script src='<%=request.getContextPath() %>/fore/js/jquery-1.7.2.min.js'></script>
 <script type="text/javascript">
 $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
-	 $("#myLogoImg").attr("src","/car_img/"+data);
+	 $("#myLogoImg").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 });
 </script>
 
@@ -115,6 +115,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
 						<li><a style="font-family: 仿宋; color: black; font-size: 2em;" href="<%=request.getContextPath()%>/order/getOrders?u_card=${user.u_card}">我的订单</a></li>
 						<li class="active"><a style="font-family: 仿宋; color: red; font-size: 2em;" href="#">订单支付</a></li>
 						<li><a style="font-family: 仿宋; color: black; font-size: 2em;" href="<%=request.getContextPath()%>/user/talk">联系客服</a></li>
+						<li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/baoxiu2?u_card=${user.u_card}">车辆报修</a></li>
 					</ul>
 				</div>
 			</div>
@@ -130,13 +131,14 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
 							<div role="tabpanel">
 								<ul class="product-tab" role="tablist">
 									<li role="presentation" class="active"><a href="#home"
-										aria-controls="home" role="tab" data-toggle="tab">网上在线支付</a></li>
-									<li role="presentation"><a href="#profile"
-										aria-controls="profile" role="tab" data-toggle="tab">扫码支付</a></li>
+										aria-controls="home" role="tab" data-toggle="tab">余额支付</a></li>
+			
+									<!-- <li role="presentation"><a href="#profile"
+										aria-controls="profile" role="tab" data-toggle="tab">余额支付</a></li> -->
 								</ul>
 								<div class="tab-content">
 									<!-- 在线支付 -->
-									<div role="tabpanel" class="tab-pane fade in active" id="home">
+									<%-- <div role="tabpanel" class="tab-pane fade in active" id="home">
 										<div style="margin-left: 100px;">
 											<form action="<%=request.getContextPath() %>/paymentServlet">
 												<div style="background-color: #ccc;">
@@ -192,7 +194,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
 												<input type="submit" value="确认支付">
 											</form>
 										</div>
-									</div>
+									</div> --%>
 
 <script src="<%=request.getContextPath() %>/fore/js/jquery-1.8.2.min.js"></script>
 <script src="<%=request.getContextPath() %>/fore/js/jquery.min.js" type="text/javascript"></script>  
@@ -200,21 +202,29 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
 <script src="<%=request.getContextPath() %>/fore/js/qrcode.js" type="text/javascript"></script>  
 
 
-									<!-- 微信扫码 -->
-									<div role="tabpanel" class="tab-pane fade" id="profile">
-											<div style="float: left;margin-left: 200px;">
-												<h2 style="text-align: center;">微信</h2>
-												<div id="qrcodeTable">
-													<img style="width: 256px;height: 256px;" alt="" src="<%=request.getContextPath() %>/fore/pay/wx.jpg">
-												</div>
+									<!-- 余额支付 -->
+									<div role="tabpanel" class="tab-pane fade in active" id="home">
+										<form action="#">
+											<div style="background-color: #ccc;">
+													<label>订单号：</label>
+													<input name="orderId" readonly="readonly" style="border: none;font-size: 1.4em;width: 400px;background-color: #ccc;" value="${orderInfo.o_code}">
+													<label style="margin-left: 40px;">应支付：</label>
+													<input name="amount" readonly="readonly" style="border: none;font-size: 1.5em;color: red;background-color: #ccc;" value="${orderInfo.allMoney+800}">
 											</div>
-											<div style="float: left;margin-left: 200px;">
-												<h2 style="text-align: center;">支付宝</h2>
-												<div id="qrcodeCanvas">
-													<img style="width: 256px;height: 256px;" alt="" src="<%=request.getContextPath() %>/fore/pay/zfb.jpg">
+												<br>
+												
+												<div style="border: 1px solid #ccc;padding-left: 10px;">
+													<br>
+													<input name="u_card" hidden value="${user.u_card}">
+													余额：<input name="p_money" readonly="readonly" style="border: none;font-size: 1.4em;width: 400px;background-color: #ccc;" value="${userPb.p_money}">
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													 积分：<input name="p_pd" readonly="readonly" style="border: none;font-size: 1.4em;width: 400px;background-color: #ccc;" value="${userPd.p_pd}">
 												</div>
-											</div>	
-											
+												
+												<br>
+												<input type="button" onclick="chongzhi()" value="充值">	
+												<input type="submit" onclick="zhifu()" value="确认支付">	
+											</form>
 									</div>
 								</div>
 						</div>
@@ -222,13 +232,42 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
 		</div>
 	</div>
 <script>
-/* jQuery('#qrcodeTable').qrcode({
-	render	: "table",
-	text	: "https://open.weixin.qq.com/connect/oauth2/authorize"
-});	 */
-/* jQuery('#qrcodeCanvas').qrcode({
-	text	: "https://openapi.alipay.com/gateway.do"
-});	 */
+function zhifu(){
+	debugger;
+	var params = {};
+	params.u_card=$('#home input[name="u_card"]').val();
+	params.orderId=$('#home input[name="orderId"]').val();
+	params.amount=$('#home input[name="amount"]').val();
+	params.p_money=$('#home input[name="p_money"]').val();
+
+	$.ajax({
+	    url : "${pageContext.request.contextPath}/order/PayOrderByYuE",
+	    type : "POST",
+	    async : true,
+	    data : params,
+	    dataType : "json",
+	    ContentType : "application/json;charset=UTF-8",
+	    success : function(data) {
+	    if(data.status=="success"){
+	    	alert("支付成功");
+			window.location.href='<%=request.getContextPath()%>/order/getOrders?u_card=${user.u_card}';
+		   }
+	   	if(data.status=="fail"){
+		   alert("支付失败，余额不足");
+			   window.location.href='<%=request.getContextPath()%>/order/getOrders?u_card=${user.u_card}';
+		   }
+	    },
+    	error:function(data){
+        	debugger
+    		alert("支付成功");
+    		window.location.href='<%=request.getContextPath()%>/order/getOrders?u_card=${user.u_card}';
+        }
+	}); 
+}
+
+function chongzhi(){
+	window.location.href='<%=request.getContextPath()%>/user/getUser/${user.u_card}';
+}
 </script>	
 			
 	<div class="footer-bottom-area">
@@ -237,7 +276,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
 				<div class="col-md-8">
 					<div class="copyright">
 						<p>
-							兰州交通大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a>
+							南昌航空大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a>
 						</p>
 					</div>
 				</div>

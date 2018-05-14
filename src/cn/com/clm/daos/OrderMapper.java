@@ -17,21 +17,23 @@ public interface OrderMapper {
 	@Select("SELECT * FROM orderlist o,diqu d WHERE o.d_id=d.d_id AND o.u_card=#{u_card} ORDER BY start_date DESC")
 	public List<Order> getOrders(String u_card);
 	
+	@Select("SELECT * FROM orderlist o,diqu d WHERE o.d_id=d.d_id AND o.u_card=#{u_card} and o.o_state='已支付' ORDER BY start_date DESC")
+	public List<Order> getOrdersPay(String u_card);
+	
 	/*userOrder 的统计*/
 	/*未支付的订单数量*/
-	@Select("SELECT COUNT(*) AS num FROM orderlist WHERE o_state='未支付' AND u_card=#{u_card}")
 	public int getNoPayOrder(String u_card);
 	
+	@Select("SELECT * from orderlist ord,user u where ord.u_card = u.u_card")
+	public List<Order> getAllOrder();
+	
 	/*已支付的订单数量*/
-	@Select("SELECT COUNT(*) AS num FROM orderlist WHERE o_state='已支付' AND u_card=#{u_card}")
 	public int getPayOrder(String u_card);
 	
 	/*未购买保险的订单数量*/
-	@Select("SELECT COUNT(*) AS num FROM orderlist WHERE o_bx='未购买' AND u_card=#{u_card}")
 	public int getNoBXOrder(String u_card);
 	
 	/*已购买保险的订单数量*/
-	@Select("SELECT COUNT(*) AS num FROM orderlist WHERE o_bx='已购买' AND u_card=#{u_card}")
 	public int getBXOrder(String u_card);
 	
 	public OrderInfo getOrderInfo(String o_code);
@@ -40,6 +42,9 @@ public interface OrderMapper {
 	@Update("UPDATE orderlist SET o_state=#{0} WHERE o_code=#{1}")
 	public void setOrderState(String o_state,String o_code);
 	
+	@Update("UPDATE orderlist SET rp_id=#{0} WHERE o_code=#{1}")
+	public void setOrderRid(int rp_id,String o_code);
+
 	/*依据o_code 查询汽车的b_code*/
 	@Select("SELECT b_code FROM orderlist WHERE o_code=#{o_code}")
 	public String getB_code(String o_code);
@@ -49,5 +54,7 @@ public interface OrderMapper {
 
 	@Select("SELECT * FROM orderlist o,diqu d WHERE o.d_id=d.d_id AND o.o_state LIKE #{0} AND o.u_card=#{1} ORDER BY start_date DESC")
 	public List<Order> getOrdersByTj(String o_state, String u_card);
+	
+	
 	
 }

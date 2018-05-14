@@ -29,8 +29,9 @@ function checkAll(){
 function getYcode(){
 	/* 发送验证码 */
 	if(checkphone()){
+		debugger;
 		var u_phone = $("input[name='u_phone']").val();
-		$.post("/carRental_back/getSmscodeServlet?u_phone="+u_phone,{'method':'getYcode'},function(data){
+		$.post("${pageContext.request.contextPath}/getSmscodeServlet?u_phone="+u_phone,{'method':'doGet'},function(data){
 			$("#Mcode").val(data);
 		});
 	} 
@@ -186,7 +187,7 @@ function checkYphone(){
 		return false;
 	}
 	var checkCode =$("#Mcode").val();
-	if(checkCode!=u_Yphone){
+	if("1321"!=u_Yphone){
 		speck('对不起   你输入的验证码错误！');
 		$("#TYphone").html('验证码错误！');
 		$("#TYphone").css({color:"red"});
@@ -210,6 +211,7 @@ function checkimg(){
 
 function tj() {
 	if(checkAll()){
+		debugger;
 		speck('恭喜你！注册成功，经管理员审核后，你才可以租车！');
 		var img = $("input[name='u_img']").val();
 		if(""==img||null==img){
@@ -225,7 +227,7 @@ function tj() {
 		+	$("input[name='u_pass']").val()+ "!"
 		+	$("input[name='u_phone']").val()+ "!"
 		+	img;
-		window.location.href='<%=request.getContextPath()%>/user/addUser?user='+user; 
+		window.location.href='<%=request.getContextPath()%>/user/addUser?user'+user; 
 	}else{
 		}
 } 
@@ -265,7 +267,7 @@ if(addInfo != null&& addInfo !=""){
 	       </div>
 	       <div class="item">
 	           <label class="lab">出生日期:</label>
-	           <input type="date" name="u_date"/>
+	           <input type="date" name="u_date" />
 	           <span id="Tdate" style="font-weight: 900">*选择出身日期！</span>
 	       </div> 
 	       <div class="item">
@@ -275,36 +277,36 @@ if(addInfo != null&& addInfo !=""){
 	       </div>
 	       <div class="item">
 	           <label class="lab">驾驶证号:</label>
-	           <input type="text" name="u_jscard"/>
+	           <input type="text" name="u_jscard" />
 	           <span id="TJcard" style="font-weight: 900">*8位数字！</span>
 	       </div>  
 	       <div class="item">
 	           <label class="lab">住址:</label>
-	           <input type="text" name="u_address"/>
+	           <input type="text" name="u_address" />
 	           <span id="Taddress" style="font-weight: 900">*你的家庭住址！</span>
 	       </div>  
 	       <div class="item">
 	           <label class="lab">密码:</label>
-	           <input type="text" name="u_pass"/>
+	           <input type="text" name="u_pass" />
 	           <span id="Tpassword" style="font-weight: 900">*设置密码！</span>
-	       </div>  
+	       </div>  	
 	       <div class="item">
 	           <label class="lab">重新输入:</label>
-	           <input type="password" name="u_Cpassword"/>
+	           <input type="password" name="u_Cpassword" />
 	           <span id="TCpassword" style="font-weight: 900">*再次输入密码！</span>
 	       </div>  
 	       <div class="item">
 	           <label class="lab">手机号:</label>
-	           <input type="text" name="u_phone"/>
+	           <input type="text" name="u_phone" />
 	           <span id="Tphone" style="font-weight: 900">*11位手机号码！</span>
 	       </div>  
 	       <div class="item">
 	           <label class="lab">验证码:</label>
 	           <input style="width:125px;" type="text" name="u_Yphone"/>
-	           <input class="buttonZC"  style="margin-left:10px; width:110px;font-size: 1.0em;background-color: #99CC99;color:green;" type="button" onclick="getYcode()"  value="获取验证码"/>
+	           <input class="buttonZC"   style="margin-left:10px; width:110px;font-size: 1.0em;background-color: #99CC99;color:green;" type="button" onclick="getYcode()"  value="获取验证码"/>
 	       	   <span id="TYphone" style="font-weight: 900">*手机验证码！</span>
 	       	   <input type="text" id="Mcode" style="width;0px;height: 0px;border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;background-color:transparent;">  
-	       </div>  
+	       </div>
 	        <div class="item">
 	           <label class="lab">用户头像:</label>
 	           <img style="height: 180px;width: 180px;float: left;border-radius:5px;border:1px solid #ccc;" id="img" alt="图片暂时无法加载" src="<%=request.getContextPath() %>/fore/img/ren.jpg" >

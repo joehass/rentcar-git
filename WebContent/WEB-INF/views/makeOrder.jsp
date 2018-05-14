@@ -79,7 +79,7 @@
 <script src='<%=request.getContextPath() %>/fore/js/jquery-1.7.2.min.js'></script>
 <script type="text/javascript">
 $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
-	 $("#myLogoImg").attr("src","/car_img/"+data);
+	 $("#myLogoImg").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 });
 </script>
     
@@ -159,8 +159,8 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
 <script type="text/javascript">
 	var dateRange1 = new pickerDateRange('date1', {
 		aRecent90Days : 'aRecent90Days', //最近90天
-		startDate: '2017-5-25',
-		endDate: '2017-5-27',
+		startDate: '2018-05-01',
+		endDate: '2018-05-27',
 		needCompare : false,
 		defaultText : ' 至 ',
 		autoSubmit : false,
@@ -170,7 +170,13 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
 
 /* 提交订单 */
 function scdd(){
-	/* jshc(); */
+	 /* jshc(); */
+	 
+	var startDate = $("#startDate").val();
+	var endDate = $("#endDate").val();
+
+	/* 设置总天数 */
+	var days = getRDate(startDate,endDate);
 
 	var tcdd = $("#tcdd").val();
 	if(""==tcdd){
@@ -200,7 +206,7 @@ function scdd(){
 			biaoxian="未购买";
 		}
 		var o_code = $("#o_code").text();
-		var orderList = b_code+"!"+startDate1+"!"+endDate1+"!"+tcdd+"!"+biaoxian+"!"+o_code;
+		var orderList = b_code+"!"+startDate1+"!"+endDate1+"!"+tcdd+"!"+biaoxian+"!"+o_code+"!"+days;
 
 		window.location.href='${pageContext.request.contextPath}/order/makeOrderList?orderList='+orderList+'&u_card='+u_card;
 	}else{
@@ -228,6 +234,7 @@ function jshc(){
 
 /* 日期相减的天数 */
 function getRDate(sDate,eDate){
+	debugger;
 	var sArr = sDate.split("-");
 	var eArr = eDate.split("-");
 	var sRDate = new Date(sArr[0], sArr[1], sArr[2]);
@@ -352,7 +359,7 @@ function gmbx(){
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>兰州交通大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
+                        <p>南昌航空大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
                     </div>
                 </div>
                 

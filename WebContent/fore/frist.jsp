@@ -40,8 +40,10 @@ body{
 <!-- 111 -->
 <div class="page1">
 <h2 style="position: relative;top:30px;">
-<video id="myVideo" src="<%=request.getContextPath() %>/fore/video/fhqc.mp4" preload="auto" poster="<%=request.getContextPath() %>/fore/img/fll.jpg" controls="controls" style="border:12px solid #ccc;border-radius:10px;height:480px;width:852px;padding: 0px;">
-</video>
+<%-- <video id="myVideo" src="c" preload="auto" poster="c/fore/img/fll.jpg" controls="controls" style="border:12px solid #ccc;border-radius:10px;height:480px;width:852px;padding: 0px;">
+</video> --%>
+
+<embed pluginspage="http://www.apple.com/quicktime/download/" src="<%=request.getContextPath() %>/fore/video/fhqc.mp4" type="application/MPEG-4 Video File" style="border:12px solid #ccc;border-radius:10px;height:480px;width:852px;padding: 0px;" wmode="transparent" autostart="True" loop="True" controller="True"/>
 
 <script type="text/javascript">
 $.post("${pageContext.request.contextPath}/car/getVideo",function(data){

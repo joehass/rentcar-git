@@ -63,7 +63,7 @@
 <script src='<%=request.getContextPath() %>/fore/js/jquery-1.7.2.min.js'></script>
 <script type="text/javascript">
 $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
-	 $("#myLogoImg").attr("src","/car_img/"+data);
+	 $("#myLogoImg").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 });
 </script>
     
@@ -78,6 +78,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                         <li class="active"><a style="font-family: 仿宋;color:red;font-size: 2em;" href="#">汽车详情</a></li>
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/getOrders?u_card=${user.u_card}">我的订单</a></li>
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/user/talk">联系客服</a></li>
+                    	<li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/baoxiu2?u_card=${user.u_card}">车辆报修</a></li>
                     </ul>
                 </div>  
             </div>
@@ -104,9 +105,9 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                                     
                                     <div class="product-gallery">
                                     	<label style="font-family: 楷体;font-size: 1.4em;color:blue;font-weight: 800;">类型：</label>
-                                        <img style="margin:0px;padding:0px;height:100px;width: 110px;" src="/car_img/${car.type.t_img}" alt="">
+                                        <img style="margin:0px;padding:0px;height:100px;width: 110px;" src="<%=request.getContextPath() %>/car_img/${car.type.t_img}" alt="">
                                     	<label style="margin-left: 30px;font-family: 楷体;font-size: 1.4em;color:blue;font-weight: 800;">品牌：</label>
-                                        <img style="margin:0px;padding:0px;height:100px;width: 95px;border: 1px solid #CCCCCC;" src="/car_img/${car.biaozhi.b_img}" alt="">
+                                        <img style="margin:0px;padding:0px;height:100px;width: 95px;border: 1px solid #CCCCCC;" src="<%=request.getContextPath() %>/car_img/${car.biaozhi.b_img}" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -120,13 +121,13 @@ $(function(){
 function changeImg()  //图片切换函数
 {
     if(curIndex==1){
-   		 $("#img").attr("src","/car_img/${car.carImage.img1}");
+   		 $("#img").attr("src","<%=request.getContextPath() %>/car_img/${car.carImage.img1}");
     }else if(curIndex==2){
-   		 $("#img").attr("src","/car_img/${car.carImage.img2}");
+   		 $("#img").attr("src","<%=request.getContextPath() %>/car_img/${car.carImage.img2}");
     }else if(curIndex==3){
-   		 $("#img").attr("src","/car_img/${car.carImage.img3}");
+   		 $("#img").attr("src","<%=request.getContextPath() %>/car_img/${car.carImage.img3}");
     }else if(curIndex==4){
-   		 $("#img").attr("src","/car_img/${car.carImage.img4}");
+   		 $("#img").attr("src","<%=request.getContextPath() %>/car_img/${car.carImage.img4}");
     }else if(curIndex==5){
         curIndex=1;
     }
@@ -170,8 +171,8 @@ function changeImg()  //图片切换函数
 	                               <c:choose>
 	                               	<c:when test="${car.state=='Y'}">
 										<button class="add_to_cart_button" style="font-size: 1.7em;font-weight: 900;" type="button" onclick="yuyue('${car.b_code}')">预约此车</button>
-										<a href="javascript:void(0)" onMouseOut="hideImg()"  onmouseover="showImg()" style="font-size: 1.4em;font-weight: 900;">扫码在手机端打开</a>
-									</c:when>
+<!-- 										<a href="javascript:void(0)" onMouseOut="hideImg()"  onmouseover="showImg()" style="font-size: 1.4em;font-weight: 900;">扫码在手机端打开</a>
+ -->									</c:when>
 	                               	<c:otherwise>
 	                               		<button class="add_to_cart_button" style="font-size: 1.7em;font-weight: 900;" type="button">该车正在使用中...</button>
 										<a href="javascript:void(0)" onMouseOut="hideImg()"  onmouseover="showImg()" style="font-size: 1.4em;font-weight: 900;margin-left: 60;">扫码在手机端打开</a>
@@ -248,7 +249,7 @@ function yuyue(b_code){
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>兰州交通大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
+                        <p>南昌航空大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
                     </div>
                 </div>
                 

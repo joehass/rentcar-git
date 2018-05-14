@@ -15,7 +15,6 @@ public class User {
 	private String u_img;
 	private String u_jscard;
 	private String u_date;
-	private String u_state;
 	
 	private UserPb userPb;
 	private UserRecode userRecode;
@@ -85,12 +84,7 @@ public class User {
 	public void setU_date(String u_date) {
 		this.u_date = u_date;
 	}
-	public String getU_state() {
-		return u_state;
-	}
-	public void setU_state(String u_state) {
-		this.u_state = u_state;
-	}
+	
 	public UserPb getUserPb() {
 		return userPb;
 	}
@@ -107,11 +101,11 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", u_name=" + u_name + ", u_psw=" + u_psw + ", u_sex=" + u_sex + ", u_age=" + u_age
 				+ ", u_card=" + u_card + ", u_address=" + u_address + ", u_phone=" + u_phone + ", u_img=" + u_img
-				+ ", u_jscard=" + u_jscard + ", u_date=" + u_date + ", u_state=" + u_state + ", userPb=" + userPb
+				+ ", u_jscard=" + u_jscard + ", u_date=" + u_date + ", u_state=" + ", userPb=" + userPb
 				+ ", userRecode=" + userRecode + "]";
 	}
 	public User(String u_name, String u_psw, String u_sex, int u_age, String u_card, String u_address, String u_phone,
-			String u_img, String u_jscard, String u_date, String u_state, UserPb userPb, UserRecode userRecode) {
+			String u_img, String u_jscard, String u_date, UserPb userPb, UserRecode userRecode) {
 		super();
 		this.u_name = u_name;
 		this.u_psw = u_psw;
@@ -123,12 +117,11 @@ public class User {
 		this.u_img = u_img;
 		this.u_jscard = u_jscard;
 		this.u_date = u_date;
-		this.u_state = u_state;
 		this.userPb = userPb;
 		this.userRecode = userRecode;
 	}
 	public User(String u_name, String u_psw, String u_sex, int u_age, String u_card, String u_address, String u_phone,
-			String u_img, String u_jscard, String u_date, String u_state) {
+			String u_img, String u_jscard, String u_date) {
 		super();
 		this.u_name = u_name;
 		this.u_psw = u_psw;
@@ -140,13 +133,11 @@ public class User {
 		this.u_img = u_img;
 		this.u_jscard = u_jscard;
 		this.u_date = u_date;
-		this.u_state = u_state;
 	}
-	public User(String u_name, String u_psw, String u_state) {
+	public User(String u_name, String u_psw) {
 		super();
 		this.u_name = u_name;
 		this.u_psw = u_psw;
-		this.u_state = u_state;
 	}
 	public User() {
 	}

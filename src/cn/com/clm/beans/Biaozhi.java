@@ -1,5 +1,8 @@
 package cn.com.clm.beans;
 
+
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,6 +36,8 @@ public class Biaozhi {
 	public void setB_img(String b_img) {
 		this.b_img = b_img;
 	}
+	
+	
 	public String getB_date() {
 		return b_date;
 	}

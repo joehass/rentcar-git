@@ -6,7 +6,7 @@
 <title>name</title>
 </head>
 <body>
-<form  action="https://www.yeepay.com/app-merchant-proxy/node" method="post" id="payform">
+<form action="https://www.yeepay.com/app-merchant-proxy/node" method="post" id="payform">
 	<input type="hidden" name="p0_Cmd" value="${messageType }">
 	<input type="hidden" name="p1_MerId" value="${p1_MerId }">
 	<input type="hidden" name="p2_Order" value="${orderId }">

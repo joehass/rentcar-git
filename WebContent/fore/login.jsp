@@ -878,7 +878,7 @@ to{-webkit-transform:rotate(0deg);}
 	<h1 style="color:#9933FF;font-family: 楷体;font-weight:bold;">风行天下汽车租赁系统</h1>
 </div>
 <form id="lg-form" action="${pageContext.request.contextPath }/user/login" onsubmit="return checkAll()" method="post" >
-		<!-- 验证码 -->
+		<!-- 验证码 --> 
 		<input type="text" id="sessionCode" style="height: 0;width: 0;">
 		<div class="biaodan" >
 			<h1 align="center" style="font-family:楷体;font-size: 2.2em;">用户登录</h1>
@@ -955,7 +955,7 @@ function checkCode(){
 	}
 }
 
-function checkYCode(){
+function checkYCode(){ 
 	var sessionCode = $("#sessionCode").val().toLowerCase();
 	var verifyCode = $("#verifyCode").val().toLowerCase(); 
 	if(sessionCode != verifyCode){

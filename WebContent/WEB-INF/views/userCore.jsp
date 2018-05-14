@@ -40,8 +40,7 @@
                 			
                 		}
                 	}
-                </script>
-                </div>
+                </script>                </div>
                 </div>
             </div>
         </div>
@@ -65,7 +64,7 @@
 <script src='<%=request.getContextPath() %>/fore/js/jquery-1.7.2.min.js'></script>
 <script type="text/javascript">
 $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
-	 $("#myLogoImg").attr("src","/car_img/"+data);
+	 $("#myLogoImg").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 });
 </script>
     
@@ -103,7 +102,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                                     
                                     <!-- 个人详情*********************************************************** -->
                                     	<tr class="cart_item">
-                                            <td colspan="2" rowspan="2"><img style="height:120px;width:100px; " alt="头像不见了" src="/car_img/${user.u_img}"></td>
+                                   	         <td colspan="2" rowspan="2"><img style="height:120px;width:100px; " alt="头像不见了" src="<%=request.getContextPath() %>/car_img/${user.u_img}"></td>
                                             <td class="product-thumbnail">身份证号</td>
                                             <td class="product-thumbnail">${user.u_card}</td>
                                         </tr>
@@ -289,7 +288,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>兰州交通大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
+                        <p>南昌航空大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
                     </div>
                 </div>
                 

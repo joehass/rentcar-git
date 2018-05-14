@@ -143,7 +143,7 @@
 <script src='<%=request.getContextPath() %>/fore/js/jquery-1.7.2.min.js'></script>
 <script type="text/javascript">
 $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
-	 $("#myLogoImg").attr("src","/car_img/"+data);
+	 $("#myLogoImg").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 });
 </script>
     
@@ -158,6 +158,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                         <li class="active"><a style="font-family: 仿宋;color:red;font-size: 2em;" href="<%=request.getContextPath()%>/order/getOrders?u_card=${user.u_card}">我的订单</a></li>
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/user/talk">联系客服</a></li>
                     	<li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/car/getImg?u_card=${user.u_card}">车图一览</a></li>
+                   		<li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/baoxiu2?u_card=${user.u_card}">车辆报修</a></li>
                     </ul>
                 </div>  
             </div>
@@ -248,8 +249,11 @@ function yhc(){
 	                                        	</span>
 	                                        </td>
 	                                        <td class="product-thumbnail">
-	                                       		<c:if test="${'未支付'==o.o_state || '已取消'==o.o_state || '已还车'==o.o_state || '已提车'==o.o_state}">
-	                                        	<a class="xq" onclick="funXq('${o.o_code }')" href="javascript:;" style="text-decoration:none;border-radius:5px; border:1px solid #99CCFF;background-color:#99CC99; font-family:楷体;font-size:1.3em;color:blue;font-weight: 900;">详情</a>
+	                                        <c:if test="${'已报修'==o.o_state }">
+	                                        		<a class="xq" onclick="funXq('${o.o_code }')" href="javascript:;" style="text-decoration:none;border-radius:5px; border:1px solid #99CCFF;background-color:#99CC99; font-family:楷体;font-size:1.3em;color:blue;font-weight: 900;">详情</a>
+	                                        	</c:if>
+	                                       		<c:if test="${'已还车'==o.o_state }">
+	                                        		<a class="xq" onclick="funXq('${o.o_code }')" href="javascript:;" style="text-decoration:none;border-radius:5px; border:1px solid #99CCFF;background-color:#99CC99; font-family:楷体;font-size:1.3em;color:blue;font-weight: 900;">详情</a>
 	                                        	</c:if>
 	                                        	<c:if test="${'未支付'==o.o_state }">
 	                                        	<a href="#" onclick="qxdd('${o.o_code }','${o.o_state}')" style="text-decoration:none;border-radius:5px; border:1px solid #99CCFF;background-color:#FFCCFF; font-family:楷体;font-size:1.3em;color:#9933FF;font-weight: 900;">取消</a>
@@ -257,7 +261,7 @@ function yhc(){
 	                                        	</c:if>
 	                                        	<c:if test="${'已支付'==o.o_state }">
 	                                        	<a class="xq" onclick="funXq('${o.o_code }')" href="javascript:;" style="text-decoration:none;border-radius:5px; border:1px solid #99CCFF;background-color:#99CC99; font-family:楷体;font-size:1.3em;color:blue;font-weight: 900;">详情</a>
-	                                        	<a href="#" onclick="dydd('${o.o_code }','${user.u_name}')" style="text-decoration:none;border-radius:5px; border:1px solid #99CCFF;background-color:#FFFFCC; font-family:楷体;font-size:1.3em;color:green;font-weight: 900;">下载合同</a>
+	                                        	<a href="#" onclick="dydd('${o.o_code }','${o.b_code}','${user.u_name}')" style="text-decoration:none;border-radius:5px; border:1px solid #99CCFF;background-color:#FFFFCC; font-family:楷体;font-size:1.3em;color:green;font-weight: 900;">还车</a>
 	                                        	</c:if>
 	                                        </td>
                                    	    </tr>
@@ -265,16 +269,14 @@ function yhc(){
                                 </table>
 				            </div>
 
+
 <script type="text/javascript">
 /*打印订单*/
-function dydd(o_code,u_name){
-	$.post("${pageContext.request.contextPath}/order/dyOrderInfo?o_code="+o_code,function(data){
-		if("1"==data){
-			alert("你好:【 "+u_name+" 】,你的订单与合同下载成功，在D盘下打开！");
-		}else{
-			alert("你好:【 "+u_name+" 】,你的订单与合同下载失败，请联系公司！");
-		}
-	});
+function dydd(o_code,b_code,u_name){	
+	debugger;
+	var u_card='${user.u_card}';
+	var o_code1 = o_code;
+	window.location.href='${pageContext.request.contextPath }/order/returnCar?o_code='+o_code+'&u_card='+u_card+'&b_code='+b_code;
 }
 
 /*支付订单：只能支付未支付订单*/
@@ -405,7 +407,7 @@ function funT1(){
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>兰州交通大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
+                        <p>南昌航空大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
                     </div>
                 </div>
                 
@@ -444,7 +446,7 @@ function funT1(){
 	</div>
 	<div class="login-body" style="background: url('../fore/img/qczl.jpg') no-repeat right bottom;">
 		<div style="float: left;margin-left: 50px;">
-			<img alt="" src="/car_img/${user.u_img}" style="width:120px; height: 150px;border: 1px solid #CCCCCC;border-radius:5px; ">
+			<img alt="" src="<%=request.getContextPath() %>/car_img/${user.u_img}" style="width:120px; height: 150px;border: 1px solid #CCCCCC;border-radius:5px; ">
 		</div>
 		<div class="xx" style="float: left;margin-left: 30px;">
 			<p><label>姓名:</label><span>${user.u_name}</span>
@@ -519,13 +521,13 @@ function funXq(o_code){
 		$("#o_state").html(data.o_state);
 		$("#d_pname").html(data.diqu.d_pname); 
 
-		$("#type").attr("src","/car_img/"+data.type.t_img); 
-		$("#biaozhi").attr("src","/car_img/"+data.biaozhi.b_img); 
+		$("#type").attr("src","<%=request.getContextPath() %>/car_img/"+data.type.t_img); 
+		$("#biaozhi").attr("src","<%=request.getContextPath() %>/car_img/"+data.biaozhi.b_img); 
 
-		$("#car_img1").attr("src","/car_img/"+data.carImage.img1); 
-		$("#car_img2").attr("src","/car_img/"+data.carImage.img2); 
-		$("#car_img3").attr("src","/car_img/"+data.carImage.img3); 
-		$("#car_img4").attr("src","/car_img/"+data.carImage.img4); 
+		$("#car_img1").attr("src","<%=request.getContextPath() %>/car_img/"+data.carImage.img1); 
+		$("#car_img2").attr("src","<%=request.getContextPath() %>/car_img/"+data.carImage.img2); 
+		$("#car_img3").attr("src","<%=request.getContextPath() %>/car_img/"+data.carImage.img3); 
+		$("#car_img4").attr("src","<%=request.getContextPath() %>/car_img/"+data.carImage.img4); 
 		
 	});
 }

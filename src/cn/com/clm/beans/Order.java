@@ -17,7 +17,25 @@ public class Order {
 	private String o_bx;//是否购买35元保险
 	private Integer d_id; //取车地点
 	private String o_state;//订单状态（已支付，未支付，*已取消，*已提车，*已还车）
-	
+	private User user;
+	private int rp_id;//归还地点
+
+	public int getRp_id() {
+		return rp_id;
+	}
+
+	public void setRp_id(int rp_id) {
+		this.rp_id = rp_id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [o_id=" + o_id + ", o_code=" + o_code + ", u_card=" + u_card + ", u_jscard=" + u_jscard

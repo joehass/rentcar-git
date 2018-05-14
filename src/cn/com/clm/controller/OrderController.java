@@ -17,12 +17,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.com.clm.beans.Manager;
 import cn.com.clm.beans.Order;
 import cn.com.clm.beans.OrderInfo;
 import cn.com.clm.beans.User;
+import cn.com.clm.beans.UserPb;
+import cn.com.clm.services.CarService;
+import cn.com.clm.services.ManagerService;
 import cn.com.clm.services.OrderService;
+import cn.com.clm.services.ProvinceService;
 import cn.com.clm.services.UserService;
 import cn.com.clm.utils.ExportExcelUtil;
+import cn.com.clm.utils.Result;
 import cn.com.clm.utils.ToWordUtil;
 
 @Controller
@@ -34,6 +40,12 @@ public class OrderController {
 	private UserService userService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private ManagerService managerService;
+	@Autowired
+	private CarService carService;
+	@Autowired
+	private ProvinceService provinceServince;
 	
 	
 	/*依据o_code将订单状态修改为已支付*/
@@ -55,12 +67,51 @@ public class OrderController {
 		String o_code = request.getParameter("o_code");
 		String u_card = request.getParameter("u_card");
 		OrderInfo orderInfo = orderService.getOrderInfo(o_code);
+		UserPb userPb = userService.getUserPb(u_card);
 	    
 	    modelAndView.addObject("user", userService.getUserCore(u_card));
 	    modelAndView.addObject("orderInfo", orderInfo);
-		 
+	    modelAndView.addObject("userPb", userPb);
+
 		return modelAndView;
 	}  
+	
+	/*支付*/
+	@RequestMapping(value="/PayOrderByYuE", method=RequestMethod.POST)  
+	@ResponseBody
+	public Result PayOrderByYuE(HttpServletRequest request) throws Exception { 
+		String u_card = request.getParameter("u_card");
+		String o_code = request.getParameter("orderId");
+		String amount = request.getParameter("amount");
+		String p_money = request.getParameter("p_money");
+		ModelAndView modelAndView = new ModelAndView();
+		String viewName = null;
+		Result result = new Result();
+		Double money = Double.parseDouble(p_money)-Double.parseDouble(amount);
+		List<Order> orders = orderService.getOwnOrders(o_code,u_card);
+		if(money > 0){
+			viewName="orderList";
+			String status = "已支付";
+			orderService.setOrderState(status,o_code);
+			userService.updateUserMoneyPay((new Double(money)).intValue(), u_card);
+			modelAndView.setViewName(viewName);
+			
+			modelAndView.addObject("user", userService.getUserCore(u_card));
+			modelAndView.addObject("orders", orders);
+			result.setStatus("success");
+			/*订单统计*/
+			modelAndView.addObject("PayOrders", orderService.getPayOrder(u_card));
+			modelAndView.addObject("NoPayOrders", orderService.getNoPayOrder(u_card));
+			modelAndView.addObject("NoBXOrders", orderService.getNoBXOrder(u_card));
+			modelAndView.addObject("BXOrders", orderService.getBXOrder(u_card));
+		}
+		else {
+			modelAndView.addObject("user", userService.getUserCore(u_card));
+			modelAndView.addObject("orders", orders);
+			result.setStatus("fail");
+		}
+		return result;
+	}
 	
 	
 	
@@ -168,7 +219,7 @@ public class OrderController {
 		System.out.println("map:"+map);
 		
 		
-		ToWordUtil.readwriteWord("D:\\zuchehetong\\fxtxzcht.doc", map);
+		ToWordUtil.readwriteWord("D:\\hetong\\fxtxzcht.doc", map);
 		boolean result = ExportExcelUtil.exportExcel(o);
 		if(result){
 			return "1";
@@ -203,6 +254,30 @@ public class OrderController {
         return modelAndView;
 	}
 	
+	
+	/*获取所有的管理员车辆及订单*/
+	@ResponseBody
+	@RequestMapping(value="/getManageOrders",method=RequestMethod.GET)
+	public ModelAndView getManagerOrders(HttpServletRequest request,@ModelAttribute("user") Manager user) throws Exception {
+		String viewName="managerCarInfo";
+		String u_card = user.getM_card();
+		List<Order> orders = orderService.getAllOrder();
+		System.out.println("orders:"+orders);
+		
+		ModelAndView modelAndView = new ModelAndView(viewName);
+		modelAndView.addObject("manager", managerService.getManagerCore(u_card));
+		//modelAndView.addObject("user", userService.getUserOrderCore(orde));
+		modelAndView.addObject("orders", orders);
+		
+		/*订单统计*/
+		modelAndView.addObject("PayOrders", orderService.getPayOrder(null));
+		modelAndView.addObject("NoPayOrders", orderService.getNoPayOrder(null));
+		modelAndView.addObject("NoBXOrders", orderService.getNoBXOrder(null));
+		modelAndView.addObject("BXOrders", orderService.getBXOrder(null));
+		
+		return modelAndView;
+	}
+	
 	/*获取所有的订单*/
 	@ResponseBody
 	@RequestMapping(value="/getOrders",method=RequestMethod.GET)
@@ -224,5 +299,144 @@ public class OrderController {
 		
 		return modelAndView;
 	}
+	
+	/*还车*/
+	@ResponseBody  
+	@RequestMapping(value="/returnCar1", method=RequestMethod.POST)  
+	public Result returnCar1(HttpServletRequest request) throws Exception { 
 
+		String u_card = request.getParameter("u_card");
+		String orderList = request.getParameter("orderList");
+		String []order = orderList.split("!");
+		String b_code = order[0];
+		String o_code = order[5];
+		String tcdd = order[3];
+		System.out.println("tcdd:"+tcdd);
+		int d_id = provinceServince.getD_id(tcdd);
+		
+		orderService.setOrderState("已还车",o_code);
+		carService.setCarState("Y", b_code);
+		orderService.setOrderRid(d_id,o_code);
+		Result result = new Result("success");
+		return result;
+		
+	} 
+	
+	@RequestMapping(value="/returnCar",method=RequestMethod.GET)
+    public ModelAndView returnCar(HttpServletRequest request) throws Exception {
+		String u_card = request.getParameter("u_card");
+		String b_code=request.getParameter("b_code");
+		String o_code=request.getParameter("o_code");
+		String viewName="returnCar";
+        ModelAndView modelAndView = new ModelAndView(viewName);
+        modelAndView.addObject("user", userService.getUserCore(u_card));
+        modelAndView.addObject("car", carService.getOneCar(b_code));
+        modelAndView.addObject("o_code", o_code);
+        //orderService.setOrderState("已还车",b_code);
+        //carService.setCarState("Y", b_code);
+        return modelAndView;
+	}
+	
+	@RequestMapping(value="/baoxiu",method=RequestMethod.GET)
+    public ModelAndView baoxiu(HttpServletRequest request) throws Exception {
+		String u_card = request.getParameter("u_card");
+		String b_code=request.getParameter("b_code");
+		String o_code=request.getParameter("o_code");
+		String viewName="baoxiuCar";
+        ModelAndView modelAndView = new ModelAndView(viewName);
+        modelAndView.addObject("user", userService.getUserCore(u_card));
+        modelAndView.addObject("car", carService.getOneCar(b_code));
+        modelAndView.addObject("o_code", o_code);
+        
+        return modelAndView;
+	}
+	
+	
+	/*还车*/
+	@ResponseBody  
+	@RequestMapping(value="/baoxiu1", method=RequestMethod.POST)  
+	public String baoxiu1(HttpServletRequest request) throws Exception { 
+
+		String u_card = request.getParameter("u_card");
+		String orderList = request.getParameter("orderList");
+		String []order = orderList.split("!");
+		String b_code = order[0];
+		String o_code = order[5];
+		String tcdd = order[3];
+		System.out.println("tcdd:"+tcdd);
+		int d_id = provinceServince.getD_id(tcdd);
+		
+		orderService.setOrderState1("已报修",o_code);
+		orderService.setOrderRid(d_id,o_code);
+		
+		return "1";
+		
+	} 
+	
+	/*获取所有的订单*/
+	@ResponseBody
+	@RequestMapping(value="/baoxiu2",method=RequestMethod.GET)
+	public ModelAndView baoxiu2(HttpServletRequest request,@ModelAttribute("user") User user) throws Exception {
+		String viewName="baoxiu";
+		String u_card = user.getU_card();
+		List<Order> orders = orderService.getOrdersPay(u_card);
+		System.out.println("orders:"+orders);
+		
+		ModelAndView modelAndView = new ModelAndView(viewName);
+		modelAndView.addObject("user", userService.getUserCore(u_card));
+		modelAndView.addObject("orders", orders);
+		
+		/*订单统计*/
+		modelAndView.addObject("PayOrders", orderService.getPayOrder(u_card));
+		modelAndView.addObject("NoPayOrders", orderService.getNoPayOrder(u_card));
+		modelAndView.addObject("NoBXOrders", orderService.getNoBXOrder(u_card));
+		modelAndView.addObject("BXOrders", orderService.getBXOrder(u_card));
+		
+		return modelAndView;
+	}
+	
+	@ResponseBody  
+	@RequestMapping(value="/grtBaoxiuByTj", method=RequestMethod.GET)  
+	public ModelAndView grtBaoxiuByTj(HttpServletRequest request) throws Exception { 
+		String o_state = request.getParameter("o_state");
+		String u_card = request.getParameter("u_card");
+		
+		String viewName="baoxiu";
+		ModelAndView modelAndView = new ModelAndView(viewName);
+		
+		List<Order> orders = orderService.getOrdersByTj(o_state,u_card);
+		modelAndView.addObject("user", userService.getUserCore(u_card));
+		modelAndView.addObject("orders", orders);
+		
+		/*订单统计*/
+		modelAndView.addObject("PayOrders", orderService.getPayOrder(u_card));
+		modelAndView.addObject("NoPayOrders", orderService.getNoPayOrder(u_card));
+		modelAndView.addObject("NoBXOrders", orderService.getNoBXOrder(u_card));
+		modelAndView.addObject("BXOrders", orderService.getBXOrder(u_card));
+		
+		return modelAndView;
+	}  
+	
+	/*依据订单状态查询订单*/
+	@ResponseBody  
+	@RequestMapping(value="/grtCarByTj", method=RequestMethod.GET)  
+	public ModelAndView grtCarByTj(HttpServletRequest request) throws Exception { 
+		String o_state = request.getParameter("o_state");
+		String u_card = request.getParameter("u_card");
+		
+		String viewName="carManager";
+		ModelAndView modelAndView = new ModelAndView(viewName);
+		
+		List<Order> orders = orderService.getOrdersByTj(o_state,u_card);
+		modelAndView.addObject("user", userService.getUserCore(u_card));
+		modelAndView.addObject("orders", orders);
+		
+		/*订单统计*/
+		modelAndView.addObject("PayOrders", orderService.getPayOrder(u_card));
+		modelAndView.addObject("NoPayOrders", orderService.getNoPayOrder(u_card));
+		modelAndView.addObject("NoBXOrders", orderService.getNoBXOrder(u_card));
+		modelAndView.addObject("BXOrders", orderService.getBXOrder(u_card));
+		
+		return modelAndView;
+	}  
 }

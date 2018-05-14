@@ -28,6 +28,29 @@ public class UserServiceImpl implements UserService{
         }
         return null;
     }
+    
+    
+	@Override
+	public void updateUserMoneyPay(int addMon, String u_card) {
+		// TODO Auto-generated method stub
+		userMapper.updateUserMoneyPay(addMon, u_card);
+	}
+
+
+	@Override
+	public UserPb getUserPb(String u_card) {
+		// TODO Auto-generated method stub
+		return userMapper.getUserPb(u_card);
+	}
+
+
+	@Override
+	public User getUserOrderCore(String u_card) {
+		// TODO Auto-generated method stub
+		return userMapper.getUserOrderCore(u_card);
+	}
+
+
 	@Override
 	public User getUserCore(String u_card) {
 		User user = userMapper.getUserCore(u_card);

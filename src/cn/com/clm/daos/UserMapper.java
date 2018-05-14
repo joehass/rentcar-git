@@ -16,6 +16,8 @@ public interface UserMapper {
 	
 	public User getUserCore(String u_card);//获得用户详情
 	
+	public User getUserOrderCore(String u_card);//获得订单用户
+	
 	@Select("SELECT * FROM user_recode WHERE u_card=#{u_card}")
 	public List<UserRecode> getUserRecode(String u_card);//获取积分
 	
@@ -49,6 +51,10 @@ public interface UserMapper {
 	@Update("UPDATE user_pb SET p_pd=p_pd-#{0},p_money=p_money+#{0}*0.05 WHERE u_card=#{1}")
 	public void updateUserPb(int p_pd, String u_card);
 	
+	@Select("select * from user_pb where u_card=#{0}")
+	public UserPb getUserPb(String u_card);
 	
+	@Update("UPDATE user_pb SET p_money=#{0} WHERE u_card=#{1}")
+	public void updateUserMoneyPay(int addMon, String u_card);
 
 }

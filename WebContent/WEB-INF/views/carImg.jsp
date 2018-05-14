@@ -65,7 +65,7 @@ Map<String,Object> systemSet = (Map<String,Object>)application.getAttribute("Sys
 <script src='<%=request.getContextPath() %>/fore/js/jquery-1.7.2.min.js'></script>
 <script type="text/javascript">
 $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
-	 $("#myLogoImg").attr("src","/car_img/"+data);
+	 $("#myLogoImg").attr("src","<%=request.getContextPath() %>/car_img/"+data);
 });
 </script>
     
@@ -80,6 +80,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/getOrders?u_card=${user.u_card}">我的订单</a></li>
                         <li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/user/talk">联系客服</a></li>
                         <li style="border-radius:15px;" class="active"><a style="font-family: 仿宋;color:red;font-size: 2em;" href="<%=request.getContextPath()%>/car/getImg?u_card=${user.u_card}">车图一览</a></li>
+                    	<li><a style="font-family: 仿宋;color:black;font-size: 2em;" href="<%=request.getContextPath()%>/order/baoxiu2?u_card=${user.u_card}">车辆报修</a></li>
                     </ul>
                 </div>  
             </div>
@@ -100,7 +101,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                        
                         	<div style="height:130px;border-radius:15px;" class="single-product">
                                 <div class="product-f-image" style="border-radius:15px;">
-                                    <img style="height:130px;width: 120px;border:1px solid #ccc;border-radius:15px;margin-left: 50px;" src="/car_img/${m.b_img}" alt="图片不见了">
+                                    <img style="height:130px;width: 120px;border:1px solid #ccc;border-radius:15px;margin-left: 50px;" src="<%=request.getContextPath() %>/car_img/${m.b_img}" alt="图片不见了">
                                 </div>
                             </div>
                             
@@ -117,7 +118,7 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                        <c:forEach var="t" items="${requestScope.types}" >
                         	<div style="height:200px;border-radius:15px;" class="single-product">
                                 <div class="product-f-image" style="border-radius:15px;">
-                                    <img style="height:130px;width: 162px;border:1px solid #ccc;border-radius:15px;margin-left: 30px;" src="/car_img/${t.t_img}" alt="图片不见了">
+                                    <img style="height:130px;width: 162px;border:1px solid #ccc;border-radius:15px;margin-left: 30px;" src="<%=request.getContextPath() %>/car_img/${t.t_img}" alt="图片不见了">
                                 	<h4 style="color:green;margin-left: 90px;margin-top: 15px;">${t.t_type}</h4>
                                 </div>
                             </div>
@@ -136,15 +137,15 @@ $.post("${pageContext.request.contextPath}/car/getLogoImg",function(data){
                        
                         	<div style="height:350px;border-radius:15px;" class="single-product">
                                 <div class="product-f-image" style="border-radius:15px;">
-                                    <img style="height:255px;width: 220px;border:1px solid #ccc;border-radius:15px;" src="/car_img/${c.carImage.img1}" alt="图片不见了">
+                                    <img style="height:255px;width: 220px;border:1px solid #ccc;border-radius:15px;" src="<%=request.getContextPath() %>/car_img/${c.carImage.img1}" alt="图片不见了">
                                     <div  class="product-hover">
                                         <a style="width: 170px;" href="#" onclick="yuyue('${c.b_code}')" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i>预约汽车</a>
                                         <a style="width: 170px;" href="${pageContext.request.contextPath }/car/getCarInfo/${c.b_code}" class="view-details-link"><i class="fa fa-link"></i>查看详情</a>
                                     </div>
                                 </div>
                                 <div style="margin-top: 6px;border:1px solid #CCCCCC;padding-top: 8px;padding-left:5px;" class="product-carousel-price">
-	                               <img style="height:60px;width: 75px;position: relative;float: left;" src="/car_img/${c.type.t_img}">
-								   <img style="height:60px;width: 50px;position: relative;float: left;;" src="/car_img/${c.biaozhi.b_img}">
+	                               <img style="height:60px;width: 75px;position: relative;float: left;" src="<%=request.getContextPath() %>/car_img/${c.type.t_img}">
+								   <img style="height:60px;width: 50px;position: relative;float: left;;" src="<%=request.getContextPath() %>/car_img/${c.biaozhi.b_img}">
 	                               <i style="color:blue;font-size: 1.2em;">${c.b_code}</i>
 	                               <i style="color:blue;font-size: 1.2em;font-family:楷体;font-weight: 800;">${c.b_kuanshi}</i>
 	                               <i style="color:red;font-size: 1.2em;">￥:${c.b_price}</i>
@@ -172,7 +173,7 @@ function yuyue(b_code){
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>兰州交通大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
+                        <p>南昌航空大学.clm&nbsp;&nbsp;&nbsp;<a target="_blank" href="#">登录QQ</a></p>
                     </div>
                 </div>
                 

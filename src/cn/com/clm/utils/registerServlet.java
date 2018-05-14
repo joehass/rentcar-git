@@ -43,16 +43,7 @@ public class registerServlet extends HttpServlet {
 		String u_date = new Date().toLocaleString().substring(0, 9);
 		int age = dateUtil.getYearSub(date, u_date);
 		
-		/*User user = new User(u_name, u_pass, u_sex, age, u_card, u_address, u_phone, image, u_jscard, u_date);
-		UserPb userPb = new UserPb(u_card, 0, 0);
-		UserService userService = new UserServiceImpl();
-		int result = userService.registerUser(user);
-		int result1 = userService.registerUserPb(userPb);
-		if(result>0&&result1>0){
-			System.out.println("【注册成功！】");
-		}else{
-			System.out.println("【注册失败！】");
-		}*/
+		
 		request.getRequestDispatcher("login").forward(request, response);
 		
 	}
